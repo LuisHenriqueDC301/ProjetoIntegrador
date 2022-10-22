@@ -21,15 +21,19 @@ body {
   max-width: 100%;
   border-radius: 6px;
 }
+#Image2{
+  border-radius: 10px;
+  max-height:100%;
+  width: 100%;
+}
 #Botao-Azul-1{
   width: 725px;
  
 }
-#btcalc{
-  
-}
-#textos{
-  color:#012970;
+
+p{
+ font-size: 20px;
+ font-family: Arial, Helvetica, sans-serif;
 }
 #Em-Cima-Do-Btn{
    height: 950px;
