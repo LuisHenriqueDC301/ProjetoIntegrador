@@ -15,18 +15,17 @@
     $Usuario = $_POST['Usuario'];
     $Senha = ($_POST['Senha']);
 
-    $query = "select id, Usuario from usuarios where Usuario = '{$Usuario}' and Senha = '{$Senha}';";
+    $query = "select Usuario, Usuario from usuarios where Usuario = '{$Usuario}' and Senha = '{$Senha}';";
     $insert = mysqli_query($conexao, $query);
     $row = mysqli_num_rows($insert);
     
     if($row == 1){
         $_SESSION["usuario"] = $Usuario;
         header('location:index.php');
-        #header('location:index.php');
 
     } else{
         header('location:pages-login.php');
          
     }
-    
+    /* */
 ?>

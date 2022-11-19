@@ -15,11 +15,17 @@
 body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;
-  color: #444444;
+  color:#444444 ;
 }
+
 #Image1{
   max-width: 100%;
   border-radius: 6px;
+  max-height: 100%;
+}
+#fundo_img1{
+  background-color: #dee2e673;
+  
 }
 #Image2{
   border-radius: 10px;

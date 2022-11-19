@@ -16,8 +16,13 @@
       if(!isset($_SESSION["usuario"])){
         header('location:pages-login.php');
       }
-      $Nome = "select Senha from usuarios where Usuario = {$_SESSION['usuario']}; " ;
+      $email = "select Email from usuarios where Usuario = '{$_SESSION['usuario']}'; " ;
+      $dados = mysqli_query($conexao, $email);
+      $_SESSION["email"] = mysqli_fetch_array($dados,MYSQLI_NUM)[0];
 
+      $Nome = "select Nome from usuarios where Usuario = '{$_SESSION['usuario']}'; " ;
+      $dados = mysqli_query($conexao, $Nome);
+      $_SESSION["nome"] = mysqli_fetch_array($dados,MYSQLI_NUM)[0];
 
 ?>  
 <head>
@@ -285,12 +290,16 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Nome</div>
-                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                    <?php
+                     echo "<div class='col-lg-9 col-md-8'>{$_SESSION['nome']}</div>";
+                    ?>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                    <?php
+                     echo "<div class='col-lg-9 col-md-8'>{$_SESSION['email']}</div>";
+                    ?>
                   </div>
 
                 </div>
@@ -298,13 +307,15 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form>
+                  <form action="alterar.php" method="POST">
                     <div class="row mb-3">
-                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Foto de perfil</label>
                       <div class="col-md-8 col-lg-9">
                         <img src="assets/img/profile-img.jpg" alt="Profile">
                         <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i>
+                            <input type='file'>
+                          </a>
                           <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
                         </div>
                       </div>
@@ -313,28 +324,24 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nome</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+                        <?php
+                          echo "<input name='nome' type='text' class='form-control' id='fullName' value='{$_SESSION['nome']}'>";
+                        ?>
                       </div>
                     </div>
-
-                    <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Telefone</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
-                      </div>
-                    </div>
-
                     <div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
+                        <?php
+                            echo "<input name='email' type='email' class='form-control' id='Email' value='{$_SESSION['email']}'>";
+                        ?>
                       </div>
                     </div>
 
 
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Salvar Alterções</button>
+                      <button type="submit" class="btn btn-primary"  id="1" value="VTNC">Salvar Alterções</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
 
@@ -384,31 +391,31 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form>
+                  <form action="alterar.php" method="POST">
 
                     <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Senha Atual:</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="currentPassword">
+                        <input name="SenhaAtual" type="password" class="form-control" id="currentPassword">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Nova senha:</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                        <input name="NovaSenha" type="password" class="form-control" id="newPassword">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Digite a nova senha:</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                        <input name="Re-Senha" type="password" class="form-control" id="renewPassword">
                       </div>
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
+                      <button type="submit" class="btn btn-primary">Mudar a senha</button>
                     </div>
                   </form><!-- End Change Password Form -->
 
@@ -424,20 +431,6 @@
     </section>
 
   </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
