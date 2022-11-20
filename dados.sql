@@ -17,6 +17,7 @@ create table usuarios(
     Usuario varchar (50) not null,
     Senha varchar(50) not null,
     Email varchar(50) not null,
+    foto varchar(100) default"profile-img.jpg",
     constraint Pk_Usuario primary key (Usuario)
 );
 /*update usuarios set Senha="senha" where id = 1;*/
